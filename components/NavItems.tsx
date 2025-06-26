@@ -1,16 +1,16 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Home", href: "/" },
   { label: "Companions", href: "/companions" },
-  { label: "My Journey", href: "my-journey" },
+  { label: "My Journey", href: "/my-journey" },
 ];
 
-const Navitems = () => {
+const NavItems = () => {
   const pathname = usePathname();
 
   return (
@@ -28,4 +28,4 @@ const Navitems = () => {
   );
 };
 
-export default Navitems;
+export default NavItems;
