@@ -1,8 +1,11 @@
+// components/NavItems.tsx
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import DiscussionNavLink from "./DiscussionNavLink"; // ✅ import the new component
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -17,13 +20,16 @@ const NavItems = () => {
     <nav className="flex items-center gap-4">
       {navItems.map(({ label, href }) => (
         <Link
-          href={href}
           key={label}
+          href={href}
           className={cn(pathname === href && "text-primary font-semibold")}
         >
           {label}
         </Link>
       ))}
+
+      {/* ✅ Dynamically fetched valid Discussion link */}
+      <DiscussionNavLink />
     </nav>
   );
 };
