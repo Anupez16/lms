@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { markLectureAsWatched } from "@/lib/actions/progress.actions";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -18,6 +19,7 @@ const LecturesPage = () => {
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [selectedLecture, setSelectedLecture] = useState<Lecture | null>(null);
   const [loading, setLoading] = useState(true);
+  const [_, startTransition] = useTransition();
 
   useEffect(() => {
     const fetchLectures = async () => {
@@ -46,6 +48,12 @@ const LecturesPage = () => {
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu.be\/)([\w-]{11})/
     );
     return match ? match[1] : "";
+  };
+
+  const handleVideoPlay = (lectureId: string) => {
+    startTransition(() => {
+      markLectureAsWatched(lectureId);
+    });
   };
 
   if (loading) {
@@ -81,6 +89,7 @@ const LecturesPage = () => {
             frameBorder="0"
             allow="autoplay; encrypted-media; fullscreen"
             allowFullScreen
+            onLoad={() => handleVideoPlay(selectedLecture.id)}
           />
         </div>
 

@@ -1,61 +1,56 @@
 'use client';
 
-import { useState } from "react";
-import { createNotification } from "@/lib/actions/notification.actions";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Grid3X3, Video, CalendarCheck, Bell } from "lucide-react";
 
-const AdminDashboardPage = () => {
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [targetUserId, setTargetUserId] = useState("");
+const adminSections = [
+  {
+    title: "Live Classes",
+    link: "/admin/live-classes",
+    description: "Schedule and manage upcoming sessions with students.",
+    icon: <CalendarCheck className="w-6 h-6 text-primary" />,
+  },
+  {
+    title: "Upload Lectures",
+    link: "/admin/lectures",
+    description: "Upload recorded lectures with YouTube links and subjects.",
+    icon: <Video className="w-6 h-6 text-primary" />,
+  },
+  {
+    title: "Create Quizzes",
+    link: "/admin/quizzes",
+    description: "Create interactive quizzes to evaluate student performance.",
+    icon: <Grid3X3 className="w-6 h-6 text-primary" />,
+  },
+  {
+    title: "Create Notifications",
+    link: "/admin/notifications",
+    description: "Send announcements and notifications to users.",
+    icon: <Bell className="w-6 h-6 text-primary" />,
+  },
+];
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await createNotification({
-        title,
-        message,
-        target_user_id: targetUserId || null,
-      });
-      alert("✅ Notification created");
-      setTitle("");
-      setMessage("");
-      setTargetUserId("");
-    } catch (error) {
-      console.error("❌ Error creating notification:", error);
-      alert("Failed to send notification.");
-    }
-  };
-
+export default function AdminDashboardPage() {
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-4 border rounded-xl shadow">
-      <h1 className="text-xl font-semibold mb-4">📢 Create Notification</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <Textarea
-          placeholder="Message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          required
-        />
-        <Input
-          placeholder="Target User ID (optional)"
-          value={targetUserId}
-          onChange={(e) => setTargetUserId(e.target.value)}
-        />
-        <Button type="submit" className="w-full">
-          Send Notification
-        </Button>
-      </form>
-    </div>
-  );
-};
+    <section className="max-w-6xl mx-auto py-10 px-6">
+      <h1 className="text-4xl font-bold mb-8 text-center">Admin Dashboard</h1>
 
-export default AdminDashboardPage;
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {adminSections.map((section) => (
+          <Link href={section.link} key={section.title}>
+            <Card className="hover:shadow-xl transition-shadow cursor-pointer h-full">
+              <CardHeader className="flex flex-col items-start gap-2">
+                <div className="bg-muted p-2 rounded-lg">
+                  {section.icon}
+                </div>
+                <CardTitle>{section.title}</CardTitle>
+                <CardDescription>{section.description}</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
