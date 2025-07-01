@@ -9,21 +9,28 @@ import { redirect } from "next/navigation";
 import {
   getUserCompanions,
   getUserSessions,
+  getBookmarkedCompanions,
 } from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import CompanionsList from "@/components/CompanionsList";
 
 const Profile = async () => {
   const user = await currentUser();
-
   if (!user) redirect("/sign-in");
 
   const companions = await getUserCompanions(user.id);
   const sessionHistory = await getUserSessions(user.id);
-  // const bookmarkedCompanions = await getBookmarkedCompanions(user.id);
+  const bookmarkedCompanions = await getBookmarkedCompanions(user.id);
+
+  const totalLessons = companions.length;
+  const completedLessons = sessionHistory.length;
+  const progressPercent = totalLessons > 0
+    ? Math.round((completedLessons / totalLessons) * 100)
+    : 0;
 
   return (
     <main className="min-lg:w-3/4">
+      {/* ✅ User Info + Progress Summary */}
       <section className="flex justify-between gap-4 max-sm:flex-col items-center">
         <div className="flex gap-4 items-center">
           <Image
@@ -31,6 +38,7 @@ const Profile = async () => {
             alt={user.firstName!}
             width={110}
             height={110}
+            className="rounded-full"
           />
           <div className="flex flex-col gap-2">
             <h1 className="font-bold text-2xl">
@@ -41,8 +49,10 @@ const Profile = async () => {
             </p>
           </div>
         </div>
+
+        {/* ✅ Stats Boxes */}
         <div className="flex gap-4">
-          <div className="border border-black rouded-lg p-3 gap-2 flex flex-col h-fit">
+          <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit">
             <div className="flex gap-2 items-center">
               <Image
                 src="/icons/check.svg"
@@ -50,31 +60,48 @@ const Profile = async () => {
                 width={22}
                 height={22}
               />
-              <p className="text-2xl font-bold">{sessionHistory.length}</p>
+              <p className="text-2xl font-bold">{completedLessons}</p>
             </div>
             <div>Lessons completed</div>
           </div>
-          <div className="border border-black rouded-lg p-3 gap-2 flex flex-col h-fit">
+          <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit">
             <div className="flex gap-2 items-center">
               <Image src="/icons/cap.svg" alt="cap" width={22} height={22} />
-              <p className="text-2xl font-bold">{companions.length}</p>
+              <p className="text-2xl font-bold">{totalLessons}</p>
             </div>
             <div>Companions created</div>
           </div>
         </div>
       </section>
-      <Accordion type="multiple">
+
+      {/* ✅ Progress Tracking Bar */}
+      <section className="mt-6">
+        <h2 className="text-lg font-semibold mb-1">📊 Progress</h2>
+        <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+          <div
+            className="bg-blue-600 h-full transition-all"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+        <p className="text-sm mt-2 text-gray-600">
+          {completedLessons} of {totalLessons} lessons completed ({progressPercent}%)
+        </p>
+      </section>
+
+      {/* ✅ Accordion Sections */}
+      <Accordion type="multiple" className="mt-10">
         <AccordionItem value="bookmarks">
           <AccordionTrigger className="text-2xl font-bold">
-            {/* Bookmarked Companions {`(${bookmarkedCompanions.length})`} */}
+            Bookmarked Companions {`(${bookmarkedCompanions.length})`}
           </AccordionTrigger>
           <AccordionContent>
             <CompanionsList
-              // companions={bookmarkedCompanions}
+              companions={bookmarkedCompanions}
               title="Bookmarked Companions"
             />
           </AccordionContent>
         </AccordionItem>
+
         <AccordionItem value="recent">
           <AccordionTrigger className="text-2xl font-bold">
             Recent Sessions
@@ -86,6 +113,7 @@ const Profile = async () => {
             />
           </AccordionContent>
         </AccordionItem>
+
         <AccordionItem value="companions">
           <AccordionTrigger className="text-2xl font-bold">
             My Companions {`(${companions.length})`}
@@ -98,4 +126,5 @@ const Profile = async () => {
     </main>
   );
 };
+
 export default Profile;
