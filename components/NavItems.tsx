@@ -1,11 +1,11 @@
-// components/NavItems.tsx
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import DiscussionNavLink from "./DiscussionNavLink"; // ✅ import the new component
+import { useUser } from "@clerk/nextjs";
+import { useState, useEffect } from "react";
+import DiscussionNavLink from "./DiscussionNavLink";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -15,6 +15,17 @@ const navItems = [
 
 const NavItems = () => {
   const pathname = usePathname();
+  const { user } = useUser();
+
+  const [isMounted, setIsMounted] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (user?.publicMetadata?.role === "admin") {
+      setIsAdmin(true);
+    }
+  }, [user]);
 
   return (
     <nav className="flex items-center gap-4">
@@ -28,7 +39,19 @@ const NavItems = () => {
         </Link>
       ))}
 
-      {/* ✅ Dynamically fetched valid Discussion link */}
+      {/* ✅ Render only after hydration to prevent mismatch */}
+      {isMounted && (
+        <Link
+          href={isAdmin ? "/admin/live-classes" : "/user/live-classes"}
+          className={cn(
+            (pathname === "/admin/live-classes" || pathname === "/user/live-classes") &&
+              "text-primary font-semibold"
+          )}
+        >
+          {isAdmin ? "Create Live Class" : "Live Class"}
+        </Link>
+      )}
+
       <DiscussionNavLink />
     </nav>
   );
