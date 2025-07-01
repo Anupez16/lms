@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
-import { useState, useEffect } from "react";
 import DiscussionNavLink from "./DiscussionNavLink";
 
 const navItems = [
@@ -16,16 +15,7 @@ const navItems = [
 const NavItems = () => {
   const pathname = usePathname();
   const { user } = useUser();
-
-  const [isMounted, setIsMounted] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-    if (user?.publicMetadata?.role === "admin") {
-      setIsAdmin(true);
-    }
-  }, [user]);
+  const isAdmin = user?.publicMetadata?.role === "admin";
 
   return (
     <nav className="flex items-center gap-4">
@@ -39,17 +29,39 @@ const NavItems = () => {
         </Link>
       ))}
 
-      {/* ✅ Render only after hydration to prevent mismatch */}
-      {isMounted && (
+      {isAdmin && (
         <Link
-          href={isAdmin ? "/admin/live-classes" : "/user/live-classes"}
-          className={cn(
-            (pathname === "/admin/live-classes" || pathname === "/user/live-classes") &&
-              "text-primary font-semibold"
-          )}
+          href="/admin/dashboard"
+          className={cn(pathname === "/admin/dashboard" && "text-primary font-semibold")}
         >
-          {isAdmin ? "Create Live Class" : "Live Class"}
+          Dashboard
         </Link>
+      )}
+
+      <Link
+        href={isAdmin ? "/admin/live-classes" : "/user/live-classes"}
+        className={cn(
+          pathname.includes("/live-classes") && "text-primary font-semibold"
+        )}
+      >
+        {isAdmin ? "Create Live Class" : "Live Class"}
+      </Link>
+
+      {!isAdmin && (
+        <>
+          <Link
+            href="/user/quizzes"
+            className={cn(pathname.startsWith("/user/quizzes") && "text-primary font-semibold")}
+          >
+            Take Quiz
+          </Link>
+          <Link
+            href="/user/lectures"
+            className={cn(pathname.startsWith("/user/lectures") && "text-primary font-semibold")}
+          >
+            Recorded Lectures
+          </Link>
+        </>
       )}
 
       <DiscussionNavLink />
