@@ -29,6 +29,7 @@ const NavItems = () => {
         </Link>
       ))}
 
+      {/* ✅ Admin Dashboard */}
       {isAdmin && (
         <Link
           href="/admin/dashboard"
@@ -38,6 +39,7 @@ const NavItems = () => {
         </Link>
       )}
 
+      {/* ✅ Live Class Link */}
       <Link
         href={isAdmin ? "/admin/live-classes" : "/user/live-classes"}
         className={cn(
@@ -47,19 +49,32 @@ const NavItems = () => {
         {isAdmin ? "Create Live Class" : "Live Class"}
       </Link>
 
+      {/* ✅ Non-admin only links */}
       {!isAdmin && (
         <>
           <Link
             href="/user/quizzes"
-            className={cn(pathname.startsWith("/user/quizzes") && "text-primary font-semibold")}
+            className={cn(
+              pathname.startsWith("/user/quizzes") && "text-primary font-semibold"
+            )}
           >
             Take Quiz
           </Link>
           <Link
             href="/user/lectures"
-            className={cn(pathname.startsWith("/user/lectures") && "text-primary font-semibold")}
+            className={cn(
+              pathname.startsWith("/user/lectures") && "text-primary font-semibold"
+            )}
           >
             Recorded Lectures
+          </Link>
+          <Link
+            href="/user/notifications"
+            className={cn(
+              pathname.startsWith("/user/notifications") && "text-primary font-semibold"
+            )}
+          >
+            🔔 Notifications
           </Link>
         </>
       )}
