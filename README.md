@@ -34,3 +34,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Roadmap
+
+### 🚧 Features in Progress
+
+5. **Course Management UI (Admin Only)**
+   - Upload recorded YouTube lectures with metadata.
+   - Create and manage quizzes.
+   - Admin-only dashboard (in development).
+   - Supabase RLS being configured.
+
+### 🕒 Upcoming Features
+
+6. **Live Virtual Class Support**
+   - Admin/teacher can schedule live sessions (Zoom/Meet/WebRTC).
+   - Join button with countdown visible to students.
+   - Integration to auto-archive sessions post-recording.
+
+7. **Notification System**
+   - In-app bell icon for updates (quizzes, videos, deadlines).
+   - Email notifications for reminders and announcements.
+   - Admin panel for announcement targeting.
+
+8. **Quiz Feature**
+   - Admin can create MCQ, True/False, or Short Answer quizzes.
+   - Students can take quizzes with feedback and scoring.
+   - Quiz data used in Progress Tracking.
