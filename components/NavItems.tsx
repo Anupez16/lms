@@ -19,6 +19,7 @@ const NavItems = () => {
 
   return (
     <nav className="flex items-center gap-4">
+      {/* Main navigation links */}
       {navItems.map(({ label, href }) => (
         <Link
           key={label}
@@ -29,7 +30,7 @@ const NavItems = () => {
         </Link>
       ))}
 
-      {/* ✅ Admin Dashboard */}
+      {/* Admin-only dashboard link */}
       {isAdmin && (
         <Link
           href="/admin/dashboard"
@@ -39,7 +40,7 @@ const NavItems = () => {
         </Link>
       )}
 
-      {/* ✅ Live Class Link */}
+      {/* Live class link changes based on role */}
       <Link
         href={isAdmin ? "/admin/live-classes" : "/user/live-classes"}
         className={cn(
@@ -49,7 +50,7 @@ const NavItems = () => {
         {isAdmin ? "Create Live Class" : "Live Class"}
       </Link>
 
-      {/* ✅ Non-admin only links */}
+      {/* Student-only options */}
       {!isAdmin && (
         <>
           <Link
@@ -79,6 +80,7 @@ const NavItems = () => {
         </>
       )}
 
+      {/* Discussion link (visible to all roles) */}
       <DiscussionNavLink />
     </nav>
   );

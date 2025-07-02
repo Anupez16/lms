@@ -1,9 +1,20 @@
 'use client';
 
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Grid3X3, Video, CalendarCheck, Bell } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  Grid3X3,
+  Video,
+  CalendarCheck,
+  Bell,
+} from "lucide-react";
 
+// Admin dashboard sections with route, icon, and description
 const adminSections = [
   {
     title: "Live Classes",
@@ -36,6 +47,7 @@ export default function AdminDashboardPage() {
     <section className="max-w-6xl mx-auto py-10 px-6">
       <h1 className="text-4xl font-bold mb-8 text-center">Admin Dashboard</h1>
 
+      {/* Dashboard navigation grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {adminSections.map((section) => (
           <Link href={section.link} key={section.title}>

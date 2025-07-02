@@ -4,11 +4,13 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
+// Load Google Font with custom CSS variable
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
 });
 
+// Default metadata for all pages
 export const metadata: Metadata = {
   title: "Converso",
   description: "Real-time AI Teaching Platform",
@@ -22,7 +24,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${bricolage.variable} antialiased`}>
-        <ClerkProvider appearance={{ variables: { colorPrimary: '#fe5933' }} }>
+        {/* Auth context and theme styling via Clerk */}
+        <ClerkProvider appearance={{ variables: { colorPrimary: '#fe5933' } }}>
           <Navbar />
           {children}
         </ClerkProvider>

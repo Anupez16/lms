@@ -13,6 +13,7 @@ type Discussion = {
 export default function DiscussionThread({ companionId }: { companionId: string }) {
   const [messages, setMessages] = useState<Discussion[]>([]);
 
+  // Fetch messages related to the given companion
   useEffect(() => {
     const fetchMessages = async () => {
       const { data, error } = await supabase
@@ -38,11 +39,13 @@ export default function DiscussionThread({ companionId }: { companionId: string 
           key={msg.id}
           className="border rounded-lg p-4 bg-white shadow-sm"
         >
+          {/* Display user ID and message content */}
           <div className="text-sm text-gray-600 mb-1">
             <strong>User:</strong> {msg.user_id}
           </div>
           <div className="text-base">{msg.content}</div>
-          {/* 🔜 Reply button will go here */}
+
+          {/* 🔜 Reply button placeholder */}
         </div>
       ))}
     </div>

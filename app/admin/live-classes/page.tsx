@@ -5,22 +5,24 @@ import { createLiveClass } from "@/lib/actions/liveClass.actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
 const AdminLiveClassForm = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  // 🔧 Form state for live class details
   const [form, setForm] = useState({
     title: "",
     youtube_link: "",
     subject: "",
-    topic: "", // ✅ Topic field added
+    topic: "",
     duration: "",
     scheduled_time: "",
   });
 
+  // 📝 Update form state on input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => ({
       ...prev,
@@ -28,14 +30,15 @@ const AdminLiveClassForm = () => {
     }));
   };
 
+  // 🚀 Submit form to create a new live class
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     startTransition(() => {
       createLiveClass({
         ...form,
-        duration: Number(form.duration),
+        duration: Number(form.duration), // ✅ Convert string to number
       }).then(() => {
-        router.push("/user/live-classes");
+        router.push("/user/live-classes"); // 🔁 Redirect user to live classes view
       });
     });
   };
@@ -46,6 +49,7 @@ const AdminLiveClassForm = () => {
         <h1 className="text-3xl font-bold mb-6 text-center">Create Live Class</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* 📌 Title */}
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input
@@ -57,6 +61,7 @@ const AdminLiveClassForm = () => {
             />
           </div>
 
+          {/* 🔗 YouTube Link */}
           <div className="space-y-2">
             <Label htmlFor="youtube_link">YouTube Link</Label>
             <Input
@@ -68,6 +73,7 @@ const AdminLiveClassForm = () => {
             />
           </div>
 
+          {/* 📚 Subject */}
           <div className="space-y-2">
             <Label htmlFor="subject">Subject</Label>
             <Input
@@ -79,6 +85,7 @@ const AdminLiveClassForm = () => {
             />
           </div>
 
+          {/* 🧠 Topic */}
           <div className="space-y-2">
             <Label htmlFor="topic">Topic</Label>
             <Input
@@ -90,6 +97,7 @@ const AdminLiveClassForm = () => {
             />
           </div>
 
+          {/* ⏱ Duration */}
           <div className="space-y-2">
             <Label htmlFor="duration">Duration (in minutes)</Label>
             <Input
@@ -103,6 +111,7 @@ const AdminLiveClassForm = () => {
             />
           </div>
 
+          {/* 📅 Scheduled Time */}
           <div className="space-y-2">
             <Label htmlFor="scheduled_time">Scheduled Time</Label>
             <Input
@@ -113,6 +122,7 @@ const AdminLiveClassForm = () => {
             />
           </div>
 
+          {/* 🚀 Submit Button */}
           <Button type="submit" className="w-full" disabled={isPending}>
             {isPending ? "Creating..." : "Create Live Class"}
           </Button>

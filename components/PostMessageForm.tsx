@@ -14,6 +14,7 @@ export default function PostMessageForm({
   const [content, setContent] = useState("");
   const { user } = useUser();
 
+  // Submit a new message to the discussions table
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -29,7 +30,7 @@ export default function PostMessageForm({
       alert("Error posting: " + error.message);
     } else {
       setContent("");
-      onMessagePosted?.(); // 👈 Trigger refetch
+      onMessagePosted?.(); // Optional callback to refetch messages
     }
   };
 

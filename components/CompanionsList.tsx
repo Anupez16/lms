@@ -37,6 +37,7 @@ const CompanionsList = ({
 }: CompanionsListProps) => {
   const [uniqueCompanions, setUniqueCompanions] = useState<Companion[]>([]);
 
+  // Remove duplicate companions (by ID) on mount or update
   useEffect(() => {
     const deduped = [...new Map(companions.map((c) => [c.id, c])).values()];
     setUniqueCompanions(deduped);
@@ -60,11 +61,13 @@ const CompanionsList = ({
             <TableHead className="text-lg text-right">Duration</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
           {uniqueCompanions.map(({ id, subject, name, topic, duration, bookmarked }) => (
             <TableRow key={id}>
               <TableCell>
                 <div className="flex items-center gap-2 justify-between">
+                  {/* Companion title and topic with subject icon */}
                   <Link href={`/companions/${id}`} className="flex-1">
                     <div className="flex items-center gap-2">
                       <div
@@ -85,6 +88,7 @@ const CompanionsList = ({
                     </div>
                   </Link>
 
+                  {/* Bookmark toggle */}
                   <BookmarkButton
                     id={id}
                     initialBookmarked={bookmarked ?? false}
@@ -94,6 +98,7 @@ const CompanionsList = ({
               </TableCell>
 
               <TableCell>
+                {/* Show subject name or icon based on screen size */}
                 <div className="subject-badge w-fit max-md:hidden">{subject}</div>
                 <div
                   className="flex items-center justify-center rounded-lg w-fit p-2 md:hidden"
@@ -109,6 +114,7 @@ const CompanionsList = ({
               </TableCell>
 
               <TableCell>
+                {/* Display duration with icon on smaller screens */}
                 <div className="flex items-center gap-2 w-full justify-end">
                   <p className="text-2xl">
                     {duration} <span className="max-md:hidden">mins</span>

@@ -80,7 +80,12 @@ const Profile = async () => {
           </div>
           <div className="border border-black rounded-lg p-3 gap-2 flex flex-col h-fit">
             <div className="flex gap-2 items-center">
-              <Image src="/icons/check.svg" alt="progress" width={22} height={22} />
+              <Image
+                src="/icons/check.svg"
+                alt="progress"
+                width={22}
+                height={22}
+              />
               <p className="text-2xl font-bold">{progressPercentage}%</p>
             </div>
             <div>Videos watched</div>
@@ -117,7 +122,10 @@ const Profile = async () => {
             🕘 Recent Sessions
           </AccordionTrigger>
           <AccordionContent>
-            <CompanionsList title="Recent Sessions" companions={sessionHistory} />
+            <CompanionsList
+              title="Recent Sessions"
+              companions={sessionHistory}
+            />
           </AccordionContent>
         </AccordionItem>
 

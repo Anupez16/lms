@@ -14,6 +14,7 @@ type Companion = {
 export default function DiscussionNavLink() {
   const [companion, setCompanion] = useState<Companion | null>(null);
 
+  // Fetch the first companion to use in the discussion link
   useEffect(() => {
     const fetchFirstCompanion = async () => {
       const { data, error } = await supabase
@@ -32,6 +33,7 @@ export default function DiscussionNavLink() {
     fetchFirstCompanion();
   }, []);
 
+  // Return nothing if no companion is loaded yet
   if (!companion) return null;
 
   return (

@@ -1,16 +1,20 @@
 // app/user/live-classes/page.tsx
+
 import { getLiveClasses } from "@/lib/actions/liveClass.actions";
 import Link from "next/link";
 
 const UserLiveClassesPage = async () => {
+  // Fetch all scheduled live classes
   const classes = await getLiveClasses();
 
   return (
     <section className="max-w-3xl mx-auto mt-10 space-y-6">
       <h1 className="text-3xl font-bold mb-4">Upcoming Live Classes</h1>
 
+      {/* No classes available */}
       {classes.length === 0 && <p>No live classes scheduled yet.</p>}
 
+      {/* List of upcoming live classes */}
       {classes.map((cls) => (
         <div
           key={cls.id}
@@ -24,11 +28,13 @@ const UserLiveClassesPage = async () => {
           </div>
 
           <p className="text-muted-foreground">{cls.topic}</p>
+
           <div className="flex items-center justify-between text-sm text-gray-600">
             <span>Subject: {cls.subject}</span>
             <span>Duration: {cls.duration} min</span>
           </div>
 
+          {/* External link to join class on YouTube */}
           <Link
             href={cls.youtube_link}
             target="_blank"

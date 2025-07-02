@@ -18,6 +18,7 @@ const UserQuizList = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch all quizzes from Supabase on mount
   useEffect(() => {
     const fetchQuizzes = async () => {
       const supabase = createClientComponentClient();
@@ -53,12 +54,15 @@ const UserQuizList = () => {
             key={quiz.id}
             className="p-3 flex flex-col justify-between h-36 rounded-xl shadow-sm hover:shadow-md transition"
           >
+            {/* Quiz title and subject/topic */}
             <div className="flex-1">
               <h2 className="text-sm font-semibold truncate">{quiz.title}</h2>
               <p className="text-xs text-muted-foreground truncate">
                 {quiz.subject} • {quiz.topic}
               </p>
             </div>
+
+            {/* Link to start the quiz */}
             <Link href={`/user/quizzes/${quiz.id}`} className="mt-2">
               <Button size="sm" className="w-full">
                 Start

@@ -14,7 +14,7 @@ type Message = {
 export default function DiscussionSection({ companionId }: { companionId: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
 
-  // Fetch all messages from Supabase
+  // Fetch discussion messages for the given companion
   const fetchMessages = async () => {
     console.log("🔎 Fetching messages for companionId:", companionId);
 
@@ -32,6 +32,7 @@ export default function DiscussionSection({ companionId }: { companionId: string
     }
   };
 
+  // Load messages on mount and when companionId changes
   useEffect(() => {
     fetchMessages();
   }, [companionId]);
@@ -40,10 +41,10 @@ export default function DiscussionSection({ companionId }: { companionId: string
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-semibold mb-4">Discussion</h2>
 
-      {/* Post form */}
+      {/* Post new message form */}
       <PostMessageForm companionId={companionId} onMessagePosted={fetchMessages} />
 
-      {/* Messages */}
+      {/* Messages list */}
       <div className="mt-6 space-y-4">
         {messages.length === 0 && (
           <p className="text-gray-500">No discussions yet. Start one!</p>
