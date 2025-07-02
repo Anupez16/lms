@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 LMS Platform – Learning Management System
 
-## Getting Started
+A full-stack, modern **Learning Management System** built with **Next.js App Router**, **Supabase**, and **Tailwind CSS**. This platform enables Admins to upload recorded lectures, schedule live classes, create quizzes, and monitor student progress. Students can join classes, watch videos, attempt quizzes, and bookmark content for later.
 
-First, run the development server:
+---
 
-```bash
+## 🚀 Tech Stack
+
+- **Frontend**: Next.js 14 (App Router), React, Tailwind CSS, ShadCN UI
+- **Backend**: Supabase (PostgreSQL, Auth, Storage)
+- **Auth**: Supabase + Clerk (optional)
+- **Real-time**: Supabase Realtime & Server Actions
+- **Deployment**: Vercel
+- **Monitoring**: Sentry (optional)
+
+---
+
+## 🔐 User Roles
+
+- **Admin**:
+  - Upload YouTube lecture videos
+  - Schedule live classes
+  - Create and manage quizzes
+  - View analytics dashboard
+  - Send announcements & reminders
+
+- **Student/Consumer**:
+  - View and join upcoming live classes
+  - Watch recorded video lectures
+  - Take quizzes and receive instant results
+  - Bookmark lectures for later
+  - View notifications and progress
+
+---
+
+## 📚 Core Features
+
+| Feature              | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| 🎥 Upload Lectures   | Admin can embed YouTube videos with metadata (title, subject, etc.)         |
+| 📅 Live Classes      | Admin can create scheduled live sessions (e.g., Zoom/Meet links)            |
+| 📝 Quizzes           | MCQ/True-False quizzes with scoring & feedback                              |
+| 🔖 Bookmarks         | Students can save lectures/resources for quick access                       |
+| 🔔 Notifications     | In-app announcements + scheduled reminders                                  |
+| 📊 Analytics         | Admin view of quiz stats, course activity, attendance (planned)             |
+| 📈 Progress Tracking | Track quiz scores, completed lectures, and engagement (in progress)         |
+
+---
+
+## 🗂️ Project Structure (App Router)
+
+\`\`\`
+app/
+│
+├── admin/
+│   ├── lectures/         # Upload recorded lectures (YouTube links)
+│   ├── live-classes/     # Create and manage live sessions
+│   ├── quizzes/          # Create quizzes with questions & answers
+│   └── dashboard/        # Admin dashboard with section cards
+│
+├── user/
+│   ├── live-classes/     # View upcoming live sessions (with join button)
+│   ├── lectures/         # View and watch YouTube-embedded lectures
+│   ├── quizzes/          # Take quizzes and view scores
+│   └── bookmarks/        # Saved videos/resources
+│
+├── api/                 # Optional backend routes
+├── components/          # Reusable UI components
+├── lib/                 # Supabase clients, helpers
+└── app/page.tsx         # Homepage / landing
+\`\`\`
+
+---
+
+## 🛠️ Setup Instructions
+
+1. **Clone the repository**
+\`\`\`bash
+git clone https://github.com/YOUR_USERNAME/lms-platform.git
+cd lms-platform
+\`\`\`
+
+2. **Install dependencies**
+\`\`\`bash
+npm install
+\`\`\`
+
+3. **Setup environment**
+Create a \`.env.local\` file and add:
+
+\`\`\`env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+\`\`\`
+
+4. **Run the project**
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Features in Progress
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [x] Lecture Upload & View
+- [x] Live Class Management & Join Button
+- [x] Quiz System
+- [x] Bookmarks Feature
+- [ ] Notification System 🔔
+- [ ] Analytics Dashboard 📊
+- [ ] Progress Tracker 🧭
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Easily deploy to **Vercel**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+\`\`\`bash
+vercel --prod
+\`\`\`
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📜 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License – free to use and modify.
+
+---
+
+## 🙋‍♂️ Author
+
+Developed by **[Anup](https://github.com/Anupez16)** as part of an internship project.  
+If you found this useful or want to collaborate, feel free to connect!
