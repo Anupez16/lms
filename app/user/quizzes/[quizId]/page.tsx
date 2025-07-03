@@ -65,7 +65,7 @@ const TakeQuizPage = () => {
       {questions.map((q, index) => (
         <Card key={q.id} className="p-4 rounded-lg">
           <h2 className="font-semibold mb-2">
-            {index + 1}. {q.question_text}
+            {index + 1}. {q.question}
           </h2>
           <div className="space-y-2">
             {q.options.map((opt) => (
